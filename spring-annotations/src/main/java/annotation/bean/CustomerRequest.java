@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.Email;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 客户请求类。
- * 验证Hiberate Validator中的参数校验注解
+ * 验证、分组校验
  *
  * @author WangChenHol
  * @date 2021-9-26 12:01
@@ -19,10 +21,33 @@ import java.util.Date;
 @ToString
 public class CustomerRequest {
 
-    @Email
-    private String custName;
+    @NotBlank(groups = {Apply.class, Update.class}, message = "客户姓名不能为空")
+    private String custName; // 客户名
 
-    private String custNo;
+    @NotBlank(groups = {Update.class, Query.class}, message = "客户编号不能为空")
+    private String custNo; // 客户编号
 
-    private Date birthday;
+    @NotNull(message = "请选择客户出生日期")
+    @Past(message = "出生日期不正确")
+    private Date birthday; // 客户生日
+
+    @Email(message = "邮箱格式不正确")
+    private String email; // 邮箱
+
+    @Valid
+    private List<BankCard> cardList;
+
+    @Getter
+    @Setter
+    @ToString
+    public static class BankCard {
+        @NotBlank(message = "银行卡号不能为空")
+        private String cardNo; // 银行卡号
+
+        @NotNull(message = "请确定有限期")
+        @Future(message = "有效期必须大于当前日期")
+        private Date periodOfValidity; // 有效期
+
+    }
+
 }
