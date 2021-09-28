@@ -27,11 +27,11 @@ public class CustomerRequest {
     @NotBlank(groups = {Update.class, Query.class}, message = "客户编号不能为空")
     private String custNo; // 客户编号
 
-    @NotNull(message = "请选择客户出生日期")
-    @Past(message = "出生日期不正确")
+    @NotNull(message = "请选择客户出生日期", groups = {Apply.class, Update.class})
+    @Past(message = "出生日期不正确", groups = {Apply.class, Update.class})
     private Date birthday; // 客户生日
 
-    @Email(message = "邮箱格式不正确")
+    @Email(regexp = "[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?", message = "邮箱格式不正确", groups = {Apply.class, Update.class})
     private String email; // 邮箱
 
     @Valid
@@ -41,13 +41,12 @@ public class CustomerRequest {
     @Setter
     @ToString
     public static class BankCard {
-        @NotBlank(message = "银行卡号不能为空")
+        @NotBlank(message = "银行卡号不能为空", groups = {Apply.class, Update.class})
         private String cardNo; // 银行卡号
 
         @NotNull(message = "请确定有限期")
-        @Future(message = "有效期必须大于当前日期")
+        @Future(message = "有效期必须大于当前日期", groups = {Apply.class})
         private Date periodOfValidity; // 有效期
 
     }
-
 }

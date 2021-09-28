@@ -4,17 +4,16 @@ import com.jason.base.exception.ServiceException;
 import com.jason.base.response.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 全局异常处理
@@ -35,20 +34,38 @@ public class ControllerAdviceException {
     }
 
     @ResponseBody
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public BaseResponse<List<Map<String, String>>> paramValidError(MethodArgumentNotValidException e) {
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class, BindException.class})
+    public BaseResponse<Object> paramValidError(Exception e) {
         logger.error("参数校验异常:", e);
-        BindingResult result = e.getBindingResult();
-        List<FieldError> errors = result.getFieldErrors();
-        List<Map<String, String>> list = new ArrayList<>();
-        for (int i = 0; i < errors.size(); i++) {
+        if (e instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;
+            BindingResult result = ex.getBindingResult();
+            List<FieldError> errors = result.getFieldErrors();
+            List<Map<String, String>> list = new ArrayList<>();
+            for (FieldError error : errors) {
+                Map<String, String> map = new HashMap<>();
+                map.put("errorField", error.getField());
+                map.put("errorMessage", error.getDefaultMessage());
+                map.put("errorValue", Objects.requireNonNull(error.getRejectedValue()).toString());
+                list.add(map);
+            }
+            return BaseResponse.error(list);
+        } else {
+            BindException ex = (BindException) e;
+            BindingResult result = ex.getBindingResult();
             Map<String, String> map = new HashMap<>();
-            FieldError fieldError = errors.get(i);
-            map.put("errorField", fieldError.getField());
-            map.put("errorMessage", fieldError.getDefaultMessage());
-            list.add(map);
+            ObjectError error = result.getGlobalError();
+            if (error != null) {
+                map.put("errorMessage", error.getDefaultMessage());
+            }
+            FieldError fieldError = result.getFieldError();
+            if (fieldError != null) {
+                map.put("errorField", fieldError.getField());
+                map.put("errorMessage", fieldError.getDefaultMessage());
+                map.put("errorValue", Objects.requireNonNull(fieldError.getRejectedValue()).toString());
+            }
+            return BaseResponse.error(map);
         }
-        return BaseResponse.error(list);
     }
 
     @ResponseBody
