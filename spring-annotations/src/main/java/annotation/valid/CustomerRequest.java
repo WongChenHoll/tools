@@ -1,4 +1,4 @@
-package annotation.bean;
+package annotation.valid;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package annotation.bean;
+package annotation.valid;
 
 /**Hibernate-Validator的分组功能。
  * @author ChenHol.Wong

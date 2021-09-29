@@ -1,6 +1,7 @@
-package annotation.bean;
+package annotation.valid;
 
 
+import annotation.bean.RequestBean;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
