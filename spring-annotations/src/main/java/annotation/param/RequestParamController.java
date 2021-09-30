@@ -2,7 +2,11 @@ package annotation.param;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 /**
+ * RequestParam注解的使用
+ *
  * @author WangChenHol
  * @date 2021-9-29 10:03
  **/
@@ -32,6 +36,11 @@ public class RequestParamController {
                                      @RequestParam(name = "author", required = false) String author,
                                      @RequestParam(name = "house", required = false, defaultValue = "江南出版社") String publishingHouse) {
         return "图书名：" + bookName + "\r\n价格：" + price + "\r\n作者：" + author + "\r\n出版社：" + publishingHouse;
+    }
+
+    @GetMapping("arrayParam")
+    public String array(@RequestParam String[] books) {
+        return Arrays.toString(books);
     }
 
 }

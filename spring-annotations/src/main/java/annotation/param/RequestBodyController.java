@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 前端传递参数值.
+ * RequestBody注解的使用
  *
  * @author WangChenHol
  * @date 2021-9-28 14:58
