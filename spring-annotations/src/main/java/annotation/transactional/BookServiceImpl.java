@@ -1,7 +1,6 @@
 package annotation.transactional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 图书服务。
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2021-9-30 14:17
  **/
 @Service
-@Transactional
+//@Transactional
 public class BookServiceImpl {
 
 

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.net.Inet4Address;
 
@@ -15,6 +16,7 @@ import java.net.Inet4Address;
  * @date 2021-9-14 16:07
  **/
 @SpringBootApplication
+@EnableScheduling // 启用定时任务
 public class SpringAnnotationApplication {
     public static final Logger logger = LoggerFactory.getLogger(SpringAnnotationApplication.class);
 
