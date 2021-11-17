@@ -19,7 +19,9 @@ import java.util.Date;
  * 第六位，星期，取值1-7，1表示星期天，2表示星期一
  * 第七位，年份，可以留空，取值1970-2099
  * </p>
- * corn从左到右（用空格隔开）：秒 分 小时 月份中的日期 月份 星期中的日期 年份
+ * Cron表达式是一个字符串，字符串以5或6个空格隔开，分为6或7个域，每一个域代表一个含义，Cron有如下两种语法格式：
+ * 　　（1） Seconds Minutes Hours DayofMonth Month DayofWeek Year
+ * 　　（2） Seconds Minutes Hours DayofMonth Month DayofWeek
  *
  * <p>
  * 每一个域都使用数字，但还可以出现如下特殊字符，它们的含义是：
@@ -63,6 +65,11 @@ public class TestScheduled {
     @Scheduled(cron = "0 0 * * * ?")
     public void test4() {
         logger.info("每小时执行一次，时间：{}", getDate());
+    }
+
+    @Scheduled(cron = "0 00 14 * * ?")
+    public void test5() {
+        logger.info("每天14点，时间：{}", getDate());
     }
 
 
