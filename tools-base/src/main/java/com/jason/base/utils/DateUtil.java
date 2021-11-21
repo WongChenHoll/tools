@@ -15,4 +15,8 @@ public class DateUtil {
     public static String currDateStr() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
+
+    public static String toDateStr(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+    }
 }
