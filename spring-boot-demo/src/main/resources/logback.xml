@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern> [%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} [%thread]  %logger{106} %L 行 - %msg%n</pattern>
+        </encoder>
+    </appender>
+<!--    <logger name="java.sql.PreparedStatement" level="DEBUG" />-->
+<!--    <logger name="com.jason.test.project.dao" level="DEBUG" />-->
+
+    <root level="info" >
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

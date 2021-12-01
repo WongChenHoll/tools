@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 下午12:21:03 Author:WangChengHao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jason.test.project.dao.RequestLogDao">
+
+    <insert id="addRequestLog" parameterType="String">
+        insert into T_JASON_REQUEST_LOG (id,CREATE_TIME,CREATE_USER,request_time,request_interface,valid_flag)
+        values(sys_guid(),sysdate,'system',sysdate,#{requestInterface},'1')
+    </insert>
+</mapper>
