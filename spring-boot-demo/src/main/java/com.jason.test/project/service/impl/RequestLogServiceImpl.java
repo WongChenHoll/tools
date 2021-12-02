@@ -1,4 +1,4 @@
-package com.jason.test.project.impl;
+package com.jason.test.project.service.impl;
 
 import com.jason.test.project.dao.RequestLogDao;
 import com.jason.test.project.service.RequestLogService;

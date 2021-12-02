@@ -1,6 +1,5 @@
-package com.jason.test.project.impl;
+package com.jason.test.project.service.impl;
 
-import com.jason.test.common.constans.UserInfo;
 import com.jason.test.project.dao.TestDao;
 import com.jason.test.project.model.User;
 import com.jason.test.project.service.RequestLogService;
@@ -9,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

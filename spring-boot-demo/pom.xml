@@ -119,11 +119,11 @@
 
 
         <!-- 单元测试插件 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.jacoco</groupId>-->
-        <!--            <artifactId>jacoco-maven-plugin</artifactId>-->
-        <!--            <version>0.8.7</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.7</version>
+        </dependency>
 
     </dependencies>
 
@@ -178,37 +178,45 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.1.8.RELEASE</version>
             </plugin>
+
             <!-- 单元测试代码覆盖率插件 -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.7</version>
                 <configuration>
+                    <destFile>target/coverage-reports/jacoco-unit.exec</destFile>
+                    <dataFile>target/coverage-reports/jacoco-unit.exec</dataFile>
+                    <includes>
+                        <include>**/test/**</include>
+                        <include>**/service/**</include>
+                        <include>**/controller/**</include>
+                        <include>**/service/impl/**</include>
+                    </includes>
                     <!-- rules里面指定覆盖规则 -->
                     <rules>
                         <rule implementation="org.jacoco.maven.RuleConfiguration">
                             <element>BUNDLE</element>
                             <limits>　　
-                                <!-- 指定方法覆盖最低 -->
-                                <limit implementation="org.jacoco.report.check.Limit">
-                                    <counter>METHOD</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>0.80</minimum>
-                                </limit>
-                                <!-- 指定分支覆盖最低 -->
-                                <limit implementation="org.jacoco.report.check.Limit">
-                                    <counter>BRANCH</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>0.80</minimum>
-                                </limit>
-                                <!-- 指定类覆盖到，最多Missed 0 -->
+<!--                                &lt;!&ndash; 指定方法覆盖到50% &ndash;&gt;-->
+<!--                                <limit implementation="org.jacoco.report.check.Limit">-->
+<!--                                    <counter>METHOD</counter>-->
+<!--                                    <value>COVEREDRATIO</value>-->
+<!--                                    <minimum>0.00</minimum>-->
+<!--                                </limit>-->
+<!--                                &lt;!&ndash; 指定分支覆盖到0% &ndash;&gt;-->
+<!--                                <limit implementation="org.jacoco.report.check.Limit">-->
+<!--                                    <counter>BRANCH</counter>-->
+<!--                                    <value>COVEREDRATIO</value>-->
+<!--                                    <minimum>0.00</minimum>-->
+<!--                                </limit>-->
+<!--                                &lt;!&ndash; 指定类覆盖到100%，不能遗失任何类 &ndash;&gt;-->
                                 <limit implementation="org.jacoco.report.check.Limit">
                                     <counter>CLASS</counter>
                                     <value>MISSEDCOUNT</value>
@@ -220,14 +228,22 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>prepare-unit-tests</id>
+                        <id>jacoco-initialize</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+                    <!--这个check:对代码进行检测，控制项目构建成功还是失败-->
+<!--                    <execution>-->
+<!--                        <id>check</id>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+                    <!--这个report:对代码进行检测，然后生成index.html在 target/site/index.html中可以查看检测的详细结果-->
                     <execution>
-                        <id>report-when-test</id>
-                        <phase>test</phase>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>

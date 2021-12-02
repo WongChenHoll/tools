@@ -1,4 +1,4 @@
-package com.jason.test.project.impl;
+package com.jason.test.project.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.jason.test.common.bean.PageQuery;
@@ -124,7 +124,7 @@ public class HotFilmServiceImpl implements HotFilmService {
         return hotFilmDao.addHotFilms(list);
     }
 
-    class AddHotFilmThread implements Runnable {
+    static class AddHotFilmThread implements Runnable {
 
         private File file;
         private int count;
