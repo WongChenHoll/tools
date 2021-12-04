@@ -10,16 +10,16 @@ public class PageQuery {
     private int end = 20; // 结束
     private int pageSize = 20; // 每页多少数据，默认20
     private int pageNum = 1; // 第几页，默认第一页
-    private int pagrNumTotal; // 总共多少页
+    private int pageNumTotal; // 总共多少页
     private int tatol; // 总数
     private boolean queryAll; // 是否查询全部
 
-    public int getPagrNumTotal() {
-        return pagrNumTotal;
+    public int getPageNumTotal() {
+        return pageNumTotal;
     }
 
-    public void setPagrNumTotal(int pagrNumTotal) {
-        this.pagrNumTotal = pagrNumTotal;
+    public void setPageNumTotal(int pageNumTotal) {
+        this.pageNumTotal = pageNumTotal;
     }
 
     public boolean getQueryAll() {

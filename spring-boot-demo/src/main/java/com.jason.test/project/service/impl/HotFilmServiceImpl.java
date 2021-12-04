@@ -50,7 +50,7 @@ public class HotFilmServiceImpl implements HotFilmService {
 
     @Transactional
     @Override
-    public int addHotFilmThread() throws JsonException {
+    public int addHotFilmThread() {
         File[] files = getFiles();
         int count = 0;
         for (File file : files) {
@@ -86,8 +86,8 @@ public class HotFilmServiceImpl implements HotFilmService {
             if (total == 0) {
                 return null;
             }
-            pageQuery.setPagrNumTotal((total / pageQuery.getPageSize()) + 1);
-            for (int i = 1; i < pageQuery.getPagrNumTotal(); i++) {
+            pageQuery.setPageNumTotal((total / pageQuery.getPageSize()) + 1);
+            for (int i = 1; i < pageQuery.getPageNumTotal(); i++) {
                 pageQuery.setStart((i - 1) * pageQuery.getPageSize());
                 pageQuery.setEnd(pageQuery.getPageSize() * i);
                 pageQuery.setPageNum(i);
@@ -107,13 +107,13 @@ public class HotFilmServiceImpl implements HotFilmService {
                 redisTemplate.opsForList().leftPush("testtest", film);
             }
             redisTemplate.expire("testtest", 60 * 2, TimeUnit.SECONDS);
-            logger.info("当前时间：{}",new Date());
+            logger.info("当前时间：{}", new Date());
         }
         return pageList;
     }
 
     private File[] getFiles() {
-        File folder = new File("E:\\资料\\hotFilm");
+        File folder = new File("D:\\data\\test-data\\hotFilm");
         return folder.listFiles();
     }
 

@@ -69,7 +69,7 @@ public class TestController {
     }
 
     @PostMapping("/add-hot-film-thread")
-    public BaseResponse addHotFilmThread() {
+    public BaseResponse<?> addHotFilmThread() {
         try {
             long s = System.currentTimeMillis();
             BaseResponse<Integer> success = BaseResponse.success(hotFilmService.addHotFilmThread());
@@ -84,7 +84,7 @@ public class TestController {
     }
 
     @PostMapping("/add-hot-film-executor-thread")
-    public BaseResponse addHotFilmExecutorThread() {
+    public BaseResponse<?> addHotFilmExecutorThread() {
         try {
             long s = System.currentTimeMillis();
             BaseResponse<Integer> success = BaseResponse.success(hotFilmService.addHotFilmExecutorThread());
@@ -99,7 +99,7 @@ public class TestController {
     }
 
     @PostMapping("/list")
-    public BaseResponse queryList(@RequestBody BaseRequest<PageQuery> request) {
+    public BaseResponse<?> queryList(@RequestBody BaseRequest<PageQuery> request) {
         return BaseResponse.error(hotFilmService.queryList(request.getData()));
     }
 }
