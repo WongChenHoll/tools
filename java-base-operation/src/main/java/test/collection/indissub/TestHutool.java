@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 测试 Hutool 包里的集合并集、交集、补集
@@ -23,8 +22,8 @@ public class TestHutool {
         System.out.println("交集：" + CollectionUtil.intersection(list1, list2)); // 交集
         System.out.println("补集：" + CollectionUtil.disjunction(list1, list2)); // 补集
         System.out.println("并集：" + CollectionUtil.union(list1, list2)); //并集
-        System.out.println("list1的差集"+CollectionUtil.subtract(list1,list2));
-        System.out.println("list2的差集"+CollectionUtil.subtract(list2,list1));
+        System.out.println("list1的差集" + CollectionUtil.subtract(list1, list2));
+        System.out.println("list2的差集" + CollectionUtil.subtract(list2, list1));
         System.out.println("list1的差集：" + CollectionUtil.subtractToList(list1, list2));
         System.out.println("list2的差集：" + CollectionUtil.subtractToList(list2, list1));
     }

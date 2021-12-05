@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 使用Stream方式
+ *
  * @author ChenHol.Wong
  * @create 2020/10/4 13:34
  */

@@ -1,6 +1,8 @@
 package test.function.model;
 
 /**
+ * 普通用户
+ *
  * @author ChenHol.Wong
  * @create 2020/12/6 14:52
  */
