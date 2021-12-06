@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String id) {
-        User user = testDao.queryUserById(id);
-        return user;
+        return testDao.queryUserById(id);
     }
 
 }

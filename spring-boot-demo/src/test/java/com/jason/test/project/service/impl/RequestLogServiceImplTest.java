@@ -1,10 +1,10 @@
 package com.jason.test.project.service.impl;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
-class RequestLogServiceImplTest {
+
+public class RequestLogServiceImplTest {
 
     @Test
     void addLog() {

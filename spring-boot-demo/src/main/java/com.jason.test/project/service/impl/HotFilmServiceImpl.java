@@ -4,12 +4,14 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.jason.test.common.bean.PageQuery;
 import com.jason.test.common.exception.JsonException;
 import com.jason.test.common.utils.ReadJsonFile;
+import com.jason.test.project.AddHotFilmThread;
 import com.jason.test.project.dao.HotFilmDao;
 import com.jason.test.project.model.HotFilm;
 import com.jason.test.project.service.HotFilmService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,7 +106,8 @@ public class HotFilmServiceImpl implements HotFilmService {
                 redisTemplate.delete("testtest");
             }
             for (HotFilm film : pageList) {
-                redisTemplate.opsForList().leftPush("testtest", film);
+                ListOperations listOperations = redisTemplate.opsForList();
+                listOperations.leftPush("testtest", film);
             }
             redisTemplate.expire("testtest", 60 * 2, TimeUnit.SECONDS);
             logger.info("当前时间：{}", new Date());
@@ -124,39 +127,4 @@ public class HotFilmServiceImpl implements HotFilmService {
         return hotFilmDao.addHotFilms(list);
     }
 
-    static class AddHotFilmThread implements Runnable {
-
-        private File file;
-        private int count;
-        private HotFilmDao hotFilmDao;
-
-        public AddHotFilmThread() {
-        }
-
-        public AddHotFilmThread(File file, HotFilmDao hotFilmDao) {
-            this.file = file;
-            this.hotFilmDao = hotFilmDao;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
-
-
-        @Override
-        public void run() {
-            try {
-                List<HotFilm> read = ReadJsonFile.read(file);
-                int fuile = hotFilmDao.addHotFilms(read);
-                setCount(fuile);
-            } catch (JsonException e) {
-                logger.error("多线程入库异常：", e);
-            }
-        }
-
-    }
 }
