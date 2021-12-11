@@ -108,10 +108,14 @@
                 <configuration>
                     <destFile>target/coverage-reports/jacoco-unit.exec</destFile>
                     <dataFile>target/coverage-reports/jacoco-unit.exec</dataFile>
-                    <!-- 也可以不配置 -->
+                    <!-- 包含哪些类用于覆盖统计 -->
                     <includes>
                         <include>**</include>
                     </includes>
+                    <!-- 排除掉哪些类不去做覆盖率的统计 -->
+<!--                    <excludes>-->
+<!--                        <exclude></exclude>-->
+<!--                    </excludes>-->
                     <!-- rules里面指定覆盖规则 -->
                     <rules>
                         <rule implementation="org.jacoco.maven.RuleConfiguration">

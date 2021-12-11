@@ -30,16 +30,17 @@ import static org.junit.Assert.assertNull;
 public class UserServiceTest {
 
     @Tested
-    private UserServiceImpl userService; // 这里必须是类，不能是接口
+    private UserServiceImpl userService; // 被测试的类。这里必须是类，不能是接口
 
     @Injectable
-    private UserDao userDao;
+    private UserDao userDao; // 被测试类中引用的依赖
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public ExpectedException expectedException = ExpectedException.none(); // 用于异常处理
 
     User user = new User("zhangsan", 20);
 
+    // 业务测试
     @Test
     public void test1() {
         new Expectations() {
@@ -51,6 +52,7 @@ public class UserServiceTest {
         userService.addUser(user);
     }
 
+    // 业务测试
     @Test
     public void test2() {
         new Expectations() {
@@ -59,9 +61,10 @@ public class UserServiceTest {
                 result = user;
             }
         };
-        assertEquals(user, userService.getUser("aa"));
+        assertEquals(user, userService.getUser("aa")); // 参数必须和Expectations中的参数一致
     }
 
+    // 业务测试
     @Test
     public void test3() {
         new Expectations() {
@@ -73,6 +76,7 @@ public class UserServiceTest {
         assertEquals(10, userService.updateUser(user));
     }
 
+    // 业务测试+异常测试
     @Test
     public void test4() throws Exception {
         ArrayList<User> list = new ArrayList<>();

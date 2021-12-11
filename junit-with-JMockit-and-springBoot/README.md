@@ -1,3 +1,5 @@
+##JMockit中文 官网：
+http://jmockit.cn/index.htm
 ## Q1: 执行时 jacoco 覆盖率文件没有生成。
 
 Skipping JaCoCo execution due to missing execution data file. 原因是 jacoco 插件适用了参数<argline>和 maven-surefire-plugin
@@ -100,4 +102,7 @@ public class ServiceTest{
 }
 
 ```
-
+#特别注意
+如果代码中使用了反射，在打包中可能会出错，不过影响不大。具体解决方案请参考：  
+记一次$jacocoData引起的bug  
+https://blog.csdn.net/m0_37772518/article/details/113124275?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-1.highlightwordscore&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-1.highlightwordscore

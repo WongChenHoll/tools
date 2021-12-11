@@ -3,6 +3,7 @@ package com.jason.jmockit.project.service;
 import com.jason.jmockit.JunitWithJmockitApplication;
 import com.jason.jmockit.project.service.impl.JdbcTemplateOperationImpl;
 import mockit.*;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -88,14 +89,28 @@ public class JdbcTemplateOperationTest {
                 result = "查询用户名";
             }
         };
-        new MockUp<JdbcTemplate>(JdbcTemplate.class){
+        new MockUp<JdbcTemplate>(JdbcTemplate.class) {
             @Mock
             public int[] batchUpdate(String sql, final BatchPreparedStatementSetter pss) throws DataAccessException {
-                return new int[]{1,2};
+                return new int[]{1, 2};
             }
         };
         String string = jdbcTemplateOperation.getString(param);
         assertEquals("查询用户名", string);
+    }
+
+    // 测试batchUpdate(String sql, final BatchPreparedStatementSetter pss)方法
+    @Test
+    public void testBatch() {
+        new MockUp<JdbcTemplate>(JdbcTemplate.class) {
+            // 是下面的方法返回的数组中永远只是4和5两个元素
+            @Mock
+            public int[] batchUpdate(String sql, final BatchPreparedStatementSetter pss) throws DataAccessException {
+                return new int[]{4, 5};
+            }
+        };
+        Assert.assertEquals(new int[]{4, 5}.length, new JdbcTemplate().batchUpdate("a", (BatchPreparedStatementSetter) null).length);
+        Assert.assertEquals(new int[]{4, 5}[0], new JdbcTemplate().batchUpdate("a", (BatchPreparedStatementSetter) null)[0]);
     }
 
 }

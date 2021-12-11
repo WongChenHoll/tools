@@ -1,5 +1,7 @@
-package com.jason.jmockit.project.service;
+package com.jason.jmockit.hello;
 
+import com.jason.jmockit.project.service.MailService;
+import com.jason.jmockit.project.service.UserCheckService;
 import com.jason.jmockit.project.service.impl.OrderService;
 import mockit.Expectations;
 import mockit.Injectable;
