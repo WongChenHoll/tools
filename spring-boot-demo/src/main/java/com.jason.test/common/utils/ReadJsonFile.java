@@ -156,7 +156,7 @@ public class ReadJsonFile {
         return filmLength;
     }
 
-    private static Date getReleaseDate(String releaseDate) throws ParseException {
+    public static Date getReleaseDate(String releaseDate) throws ParseException {
         if (StringUtils.isBlank(releaseDate)) {
             return null;
         }

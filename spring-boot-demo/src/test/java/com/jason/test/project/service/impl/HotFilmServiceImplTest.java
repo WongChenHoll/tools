@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -26,9 +27,9 @@ import java.util.concurrent.TimeUnit;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-//@RunWith(MockitoJUnitRunner.Silent.class)
 @SpringBootTest(classes = {TestApplication.class})
 public class HotFilmServiceImplTest {
+
     @InjectMocks
     private HotFilmServiceImpl hotFilmServiceImpl;
     @Mock
@@ -63,6 +64,7 @@ public class HotFilmServiceImplTest {
 
         List<HotFilm> films = new ArrayList<>();
         HotFilm hotFilm = new HotFilm();
+        hotFilm.setFilmName("ssss");
         films.add(hotFilm);
         PageQuery pageQuery1 = new PageQuery();
         pageQuery1.setQueryAll(true);
@@ -82,6 +84,7 @@ public class HotFilmServiceImplTest {
         when(redisTemplate.expire("testtest", 60 * 2, TimeUnit.SECONDS)).thenReturn(Boolean.TRUE);
 
         List<HotFilm> hotFilms2 = hotFilmServiceImpl.queryList(pageQuery2);
+        Assert.assertEquals(1, hotFilms2.size());
     }
 
     @Test

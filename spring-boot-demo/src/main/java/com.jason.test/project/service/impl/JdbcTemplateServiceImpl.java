@@ -1139,7 +1139,7 @@ public class JdbcTemplateServiceImpl implements JdbcTemplateService {
 
     }
 
-    private void opertion() {
+    public void opertion() {
         map.clear();
         map.put(1, 1);
         map.put(2, 2);
