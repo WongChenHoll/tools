@@ -14,14 +14,7 @@ import java.util.stream.Stream;
  */
 public class TestStream {
     public static void main(String[] args) {
-        ArrayList<Model> models = new ArrayList<>();
-        models.add(new Model("张三", 20, "上海"));
-        models.add(new Model("李四", 32, "北京"));
-        models.add(new Model("王五", 41, "深圳"));
-        models.add(new Model("tom", 18, "北京"));
-
         List<String> strList = Arrays.asList("a", "b", "c", "d", "e", "e");
-        List<String> numStrList = Arrays.asList("10", "11", "12");
         List<Integer> sortList = Arrays.asList(4, 2, 10, 1, 8);
 
         // 构造Stream流的方式
@@ -54,9 +47,15 @@ public class TestStream {
         List<String> collect1 = list3.stream().map(String::toUpperCase).collect(Collectors.toList());
         System.out.println("map后转换数据：" + collect1);
 
+        List<String> numStrList = Arrays.asList("10", "11", "12");
         List<Integer> list5 = numStrList.stream().map(Integer::valueOf).collect(Collectors.toList());
         System.out.println("map转换后的数据：" + list5);
 
+        ArrayList<Model> models = new ArrayList<>();
+        models.add(new Model("张三", 20, "上海"));
+        models.add(new Model("李四", 32, "北京"));
+        models.add(new Model("王五", 41, "深圳"));
+        models.add(new Model("tom", 18, "北京"));
         System.out.println("map获取对象中的某个属性值：" + models.stream().map(Model::getAddress).collect(Collectors.toList()));
 
         // filter 的使用
