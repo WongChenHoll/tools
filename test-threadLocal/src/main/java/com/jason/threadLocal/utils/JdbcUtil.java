@@ -15,6 +15,8 @@ import java.util.Properties;
  * @date 2021-12-12 14:16
  **/
 public class JdbcUtil {
+    private JdbcUtil(){}
+
     static String driver;
     static String url;
     static String userName;

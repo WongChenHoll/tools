@@ -122,7 +122,7 @@ public class TestStream {
 
         // iterate
         System.out.println("从10开始生成一个等差队列，取其前五个：" + Stream.iterate(10, n -> n + 5).limit(5).collect(Collectors.toList()));
-
+        System.out.println("创建一个大小是10的数组，元素数据都是5：" + Stream.iterate(5, n -> n).limit(10).collect(Collectors.toList()));
 
     }
 

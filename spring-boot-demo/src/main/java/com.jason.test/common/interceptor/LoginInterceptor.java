@@ -1,10 +1,8 @@
 package com.jason.test.common.interceptor;
 
-import com.jason.test.common.config.RedisConfig;
 import com.jason.test.common.constans.BaseConstans;
 import com.jason.test.common.constans.UserInfo;
 import com.jason.test.project.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
@@ -23,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private RedisTemplate redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public LoginInterceptor(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
