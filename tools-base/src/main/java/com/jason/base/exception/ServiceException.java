@@ -43,6 +43,10 @@ public class ServiceException extends Exception {
         return new ServiceException(message, responseEnum.getCode(), throwable);
     }
 
+    public static ServiceException connectionException(String message, Throwable throwable) {
+        return errorException(message, ResponseEnum.CONNECTION_FAIL, throwable);
+    }
+
     public static ServiceException paramsException(String message) {
         return baseException(message, ResponseEnum.PARAM_VALID_ERROR);
     }
