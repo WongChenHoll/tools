@@ -20,6 +20,16 @@ public class ServiceException extends Exception {
         this.code = null;
     }
 
+    private ServiceException(String message, Throwable throwable) {
+        super(message, throwable);
+        this.code = null;
+    }
+
+    private ServiceException(String message, String code, Throwable throwable) {
+        super(message, throwable);
+        this.code = code;
+    }
+
     private ServiceException(String message, String code) {
         super(message);
         this.code = code;
@@ -27,6 +37,10 @@ public class ServiceException extends Exception {
 
     public static ServiceException baseException(String message, ResponseEnum responseEnum) {
         return new ServiceException(message, responseEnum.getCode());
+    }
+
+    public static ServiceException errorException(String message, ResponseEnum responseEnum, Throwable throwable) {
+        return new ServiceException(message, responseEnum.getCode(), throwable);
     }
 
     public static ServiceException paramsException(String message) {
