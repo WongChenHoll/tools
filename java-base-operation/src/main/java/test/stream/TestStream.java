@@ -30,12 +30,12 @@ public class TestStream {
         Object[] array = Stream.of("a", "b", "c").toArray();
         String[] toArray = Stream.of("a", "b", "c").toArray(String[]::new);
         // 转换成集合
-        List<String> list1 = Arrays.asList(arr).stream().collect(Collectors.toList());
-        Set<String> set = Arrays.asList(arr).stream().collect(Collectors.toSet());
-        ArrayList<String> list2 = Arrays.asList(arr).stream().collect(Collectors.toCollection(ArrayList::new));
-        Stack<String> stack = Arrays.asList(arr).stream().collect(Collectors.toCollection(Stack::new));
+        List<String> list1 = new ArrayList<>(Arrays.asList(arr));
+        Set<String> set = Arrays.stream(arr).collect(Collectors.toSet());
+        ArrayList<String> list2 = new ArrayList<>(Arrays.asList(arr));
+        Stack<String> stack = Arrays.stream(arr).collect(Collectors.toCollection(Stack::new));
         // 转换成String
-        String collect = Arrays.asList(arr).stream().collect(Collectors.joining());
+        String collect = String.join("", arr);
 
         // 创建无线循环流
 //        Stream.iterate(0, t -> t + 5).forEach(System.out::println); // 从0开始，每隔5个数取一个，会无限循环的
@@ -62,11 +62,11 @@ public class TestStream {
         List<Model> filter1 = models.stream().filter(model -> model.getAge() > 30).collect(Collectors.toList());
         System.out.println("filter过滤后的数据：" + filter1);
 
-        String orElse1 = strList.stream().filter(s -> "aa".equals(s)).findAny().orElse("找不到");
-        String orElse2 = strList.stream().filter(s -> "a".equals(s)).findAny().orElse("找不到");
+        String orElse1 = strList.stream().filter("aa"::equals).findAny().orElse("找不到");
+        String orElse2 = strList.stream().filter("a"::equals).findAny().orElse("找不到");
         System.out.println("orElse1：" + orElse1 + "  orElse2：" + orElse2);
 
-        int sum = models.stream().filter(model -> "北京".equals(model.getAddress())).mapToInt(model -> model.getAge()).sum();
+        int sum = models.stream().filter(model -> "北京".equals(model.getAddress())).mapToInt(Model::getAge).sum();
         System.out.println("居住在北京所有人的年龄和：" + sum);
 
         // flatMap
@@ -112,8 +112,8 @@ public class TestStream {
 
         // findFirst、findAny allMatch anyMatch noneMatch
         System.out.println("findFirst：" + strList.stream().findFirst().get());
-        System.out.println("findAny：" + strList.stream().filter(a -> "哈哈".equals(a)).findAny().orElse("没有\"哈哈\""));
-        System.out.println("findAny：" + strList.stream().filter(a -> "c".equals(a)).findAny().orElse("没有\"c\""));
+        System.out.println("findAny：" + strList.stream().filter("哈哈"::equals).findAny().orElse("没有\"哈哈\""));
+        System.out.println("findAny：" + strList.stream().filter("c"::equals).findAny().orElse("没有\"c\""));
         System.out.println("allMatch：" + sortList.stream().allMatch(a -> a > 5));
         System.out.println("allMatch：" + models.stream().allMatch(a -> a.getAge() > 15));
         System.out.println("anyMatch：" + models.stream().anyMatch(model -> "张三".equals(model.getName())));

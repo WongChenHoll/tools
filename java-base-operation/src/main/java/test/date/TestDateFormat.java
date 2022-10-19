@@ -9,7 +9,7 @@ import java.util.logging.SimpleFormatter;
  * @author ChenHol.Wong
  * @create 2020/5/1 17:58
  */
-public class TestDateFormate {
+public class TestDateFormat {
     public static void main(String[] args) throws ParseException {
         String date="2020年5月01日 18:00:21";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
