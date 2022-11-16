@@ -1,5 +1,9 @@
 package test.stream;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
 import test.other.Model;
 
 import java.util.*;
@@ -69,7 +73,27 @@ public class TestStream {
         int sum = models.stream().filter(model -> "北京".equals(model.getAddress())).mapToInt(Model::getAge).sum();
         System.out.println("居住在北京所有人的年龄和：" + sum);
 
-        // flatMap
+        // toMap 将集合转换成Map
+        Map<String, String> listToStrStrMap = models.stream().collect(Collectors.toMap(Model::getName, Model::getAddress));
+        Map<String, Model> listToStrModelMap = models.stream().collect(Collectors.toMap(Model::getName, model -> model));
+        System.out.println("将List转换成Map{String->String}：" + listToStrStrMap);
+        System.out.println("将List转换成Map{String->Model}：" + listToStrModelMap);
+        JSONArray jsonArray = JSON.parseArray(JSONObject.toJSONString(models, JSONWriter.Feature.WriteNulls));
+        Map<String, String> JSONArrayToStrStrMap = jsonArray.stream().collect(Collectors.toMap(json -> {
+            JSONObject j = (JSONObject) json;
+            return j.getString("name");
+        }, json -> {
+            JSONObject j = (JSONObject) json;
+            return j.getString("address");
+        }));
+        Map<String, JSONObject> JSONArrayToStrJSONObjectMap = jsonArray.stream().collect(Collectors.toMap(json -> {
+            JSONObject j = (JSONObject) json;
+            return j.getString("name");
+        }, json -> (JSONObject) json));
+        System.out.println("将JSONArray转换成Map{String->String}：" + JSONArrayToStrStrMap);
+        System.out.println("将JSONArray转换成Map{String->JSONObject}：" + JSONArrayToStrJSONObjectMap);
+
+        // flatMap 合并
         List<List<String>> flatMap = Stream.of(strList, numStrList).collect(Collectors.toList());
         System.out.println("不使用flatMap合并多个list：" + flatMap);
         List<String> flatMap1 = Stream.of(strList, numStrList).flatMap(List::stream).collect(Collectors.toList());
