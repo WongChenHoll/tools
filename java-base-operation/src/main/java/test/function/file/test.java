@@ -1,4 +1,4 @@
-package test.io.file;
+package test.function.file;
 
 import java.io.BufferedReader;
 import java.io.File;
