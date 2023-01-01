@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserAOP {
 
-    //    @Pointcut("execution(* com.jason.sourceCode.use.project.controller.UserControlle.add(..))") // 只拦截UserControlle.add()方法
+//    @Pointcut("execution(* com.jason.sourceCode.use.project.controller.UserControlle.add(..))") // 只拦截UserControlle.add()方法
 //    @Pointcut("execution(* com.jason.sourceCode.use.project.service.UserService.*(..))") // 拦截UserService接口中的所有的方法
 //    @Pointcut("execution(* com.jason.sourceCode.use.project..*.*(..))") // 拦截project包和子包中的任何方法
 //    @Pointcut("execution(* com.jason.sourceCode.use.project.controller.*.*(..))") // 只拦截controller该包中的任何方法

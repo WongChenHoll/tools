@@ -73,25 +73,27 @@ public class TestStream {
         int sum = models.stream().filter(model -> "北京".equals(model.getAddress())).mapToInt(Model::getAge).sum();
         System.out.println("居住在北京所有人的年龄和：" + sum);
 
-        // toMap 将集合转换成Map   (a, b) -> a防止key键重复
-        Map<String, String> listToStrStrMap = models.stream().collect(Collectors.toMap(Model::getName, Model::getAddress, (a, b) -> a));
+        // toMap 将集合转换成Map
+        Map<String, String> listToStrStrMap = models.stream().collect(Collectors.toMap(Model::getName, Model::getAddress, (a, b) -> a)); // (a, b) -> a防止key键重复
         Map<String, Model> listToStrModelMap = models.stream().collect(Collectors.toMap(Model::getName, model -> model));
         System.out.println("将List转换成Map{String->String}：" + listToStrStrMap);
         System.out.println("将List转换成Map{String->Model}：" + listToStrModelMap);
 
         JSONArray jsonArray = JSON.parseArray(JSONObject.toJSONString(models, JSONWriter.Feature.WriteNulls));
-        Map<String, String> JSONArrayToStrStrMap = jsonArray.stream().collect(Collectors.toMap(json -> {
-            JSONObject j = (JSONObject) json;
-            return j.getString("name");
-        }, json -> {
-            JSONObject j = (JSONObject) json;
-            return j.getString("address");
-        }));
+        Map<String, String> JSONArrayToStrStrMap = jsonArray.stream().collect(Collectors.toMap(
+                json -> {
+                    JSONObject j = (JSONObject) json;
+                    return j.getString("name");
+                }, json -> {
+                    JSONObject j = (JSONObject) json;
+                    return j.getString("address");
+                }));
         System.out.println("将JSONArray转换成Map{String->String}：" + JSONArrayToStrStrMap);
-        Map<String, JSONObject> JSONArrayToStrJSONObjectMap = jsonArray.stream().collect(Collectors.toMap(json -> {
-            JSONObject j = (JSONObject) json;
-            return j.getString("name");
-        }, json -> (JSONObject) json));
+        Map<String, JSONObject> JSONArrayToStrJSONObjectMap = jsonArray.stream().collect(Collectors.toMap(
+                json -> {
+                    JSONObject j = (JSONObject) json;
+                    return j.getString("name");
+                }, json -> (JSONObject) json));
         System.out.println("将JSONArray转换成Map{String->JSONObject}：" + JSONArrayToStrJSONObjectMap);
 
         // flatMap 合并
