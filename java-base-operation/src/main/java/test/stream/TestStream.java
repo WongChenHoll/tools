@@ -120,8 +120,8 @@ public class TestStream {
         System.out.println("根据指定规则排序：" + models.stream().sorted(Comparator.comparing(Model::getAge)).collect(Collectors.toList()));
 
         // reduce 归纳 把 Stream 元素组合起来进行操作
-        System.out.println("将集合中的每个元素通过' # '拼接起来：" + strList.stream().reduce((a, b) -> a + " # " + b));
-        System.out.println("将结合中每个元素拼接起来，并在前面加上 # ：" + strList.stream().reduce(" # ", String::concat));
+        System.out.println("将集合中的每个元素通过 # 拼接起来：" + strList.stream().reduce((a, b) -> a + "#" + b).get());
+        System.out.println("将结合中每个元素拼接起来，并在前面加上 # ：" + strList.stream().reduce("#", String::concat));
         System.out.println("求流中最大值：" + sortList.stream().reduce(Integer.MAX_VALUE, Integer::min));
 
         // sum count max min
