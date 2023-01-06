@@ -35,27 +35,27 @@ public class DateUtil {
     /**
      * 取两个日期之间的所有日期
      *
-     * @param d1 开始日期
-     * @param d2 结束日期
+     * @param startDate 开始日期
+     * @param endDate   结束日期
      * @return 日期LocalDate集合
      */
-    public static List<LocalDate> betweenLocalDate(String d1, String d2, boolean includeEndDate) {
-        LocalDate startDate = toLocalDate(d1);
-        LocalDate endDate = toLocalDate(d2);
-        long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+    public static List<LocalDate> betweenLocalDate(String startDate, String endDate, boolean includeEndDate) {
+        LocalDate sd = toLocalDate(startDate);
+        LocalDate ed = toLocalDate(endDate);
+        long numOfDaysBetween = ChronoUnit.DAYS.between(sd, ed);
         if (includeEndDate) {
             numOfDaysBetween += 1;
         }
-        return IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(startDate::plusDays).collect(Collectors.toList());
+        return IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween).mapToObj(sd::plusDays).collect(Collectors.toList());
     }
 
     /**
-     * @param d1
-     * @param d2
-     * @return
+     * @param startDate 开始日期
+     * @param endDate   结束日期
+     * @return 日期String集合
      */
-    public static List<String> betweenString(String d1, String d2, boolean includeEndDate) {
-        List<LocalDate> localDates = betweenLocalDate(d1, d2, includeEndDate);
+    public static List<String> betweenString(String startDate, String endDate, boolean includeEndDate) {
+        List<LocalDate> localDates = betweenLocalDate(startDate, endDate, includeEndDate);
         return localDates.stream().map(localDate -> DateTimeFormatter.ofPattern(DEFAULT_FORMAT_YYYY_MM_DD).format(localDate)).collect(Collectors.toList());
     }
 
