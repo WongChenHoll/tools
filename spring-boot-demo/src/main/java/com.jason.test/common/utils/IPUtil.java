@@ -1,4 +1,4 @@
-package com.jason.base.utils;
+package com.jason.test.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.Inet4Address;

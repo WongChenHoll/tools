@@ -16,16 +16,17 @@ import java.util.stream.IntStream;
 public class DateUtil {
 
     public static final String DEFAULT_FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String DEFAULT_FULL_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 获取当前时间的字符串类型值
      */
     public static String currDateStr() {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        return new SimpleDateFormat(DEFAULT_FULL_FORMAT).format(new Date());
     }
 
     public static String toDateStr(Date date) {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        return new SimpleDateFormat(DEFAULT_FULL_FORMAT).format(date);
     }
 
     public static LocalDate toLocalDate(String date) {
