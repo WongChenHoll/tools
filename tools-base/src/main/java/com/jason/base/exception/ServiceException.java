@@ -48,7 +48,11 @@ public class ServiceException extends Exception {
     }
 
     public static ServiceException paramsException(String message) {
-        return baseException(message, ResponseEnum.PARAM_VALID_ERROR);
+        return baseException(message, ResponseEnum.VALID_PARAM_ERROR);
+    }
+
+    public static ServiceException validException(String message) {
+        return baseException(message, ResponseEnum.VALID_ERROR);
     }
 
     public static ServiceException serverException(String message) {

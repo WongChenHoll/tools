@@ -1,5 +1,6 @@
-package annotation.valid;
+package annotation.controller;
 
+import annotation.valid.*;
 import com.jason.base.response.BaseResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
