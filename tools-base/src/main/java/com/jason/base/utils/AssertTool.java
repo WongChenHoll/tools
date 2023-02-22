@@ -12,8 +12,8 @@ import java.util.Map;
  * @description 断言
  * @date 2023-2-9 星期四 17:10
  **/
-public class Assert {
-    private Assert() {
+public class AssertTool {
+    private AssertTool() {
     }
 
     public static void isTrue(boolean expression, String exceptionMessage) throws ServiceException {

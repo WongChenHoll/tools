@@ -20,6 +20,11 @@ public class ServiceException extends Exception {
         this.code = null;
     }
 
+    private ServiceException(ResponseEnum responseEnum) {
+        super(responseEnum.getMessage());
+        this.code = responseEnum.getCode();
+    }
+
     private ServiceException(String message, Throwable throwable) {
         super(message, throwable);
         this.code = null;
@@ -47,6 +52,10 @@ public class ServiceException extends Exception {
         return errorException(message, ResponseEnum.CONNECTION_FAIL, throwable);
     }
 
+    public static ServiceException serverException(String message, Throwable throwable) {
+        return errorException(message, ResponseEnum.SERVER_ERROR, throwable);
+    }
+
     public static ServiceException paramsException(String message) {
         return baseException(message, ResponseEnum.VALID_PARAM_ERROR);
     }
@@ -55,7 +64,23 @@ public class ServiceException extends Exception {
         return baseException(message, ResponseEnum.VALID_ERROR);
     }
 
+    public static ServiceException pathException(String message) {
+        return baseException(message, ResponseEnum.PATH_ERROR);
+    }
+
     public static ServiceException serverException(String message) {
         return baseException(message, ResponseEnum.SERVER_ERROR);
+    }
+
+    public static ServiceException fileException(String message) {
+        return baseException(message, ResponseEnum.FILE_ERROR);
+    }
+
+    public static ServiceException fileNotExistException(String message) {
+        return baseException(message, ResponseEnum.FILE_NOT_EXIST);
+    }
+
+    public static ServiceException fileNotExistException() {
+        return new ServiceException(ResponseEnum.FILE_NOT_EXIST);
     }
 }

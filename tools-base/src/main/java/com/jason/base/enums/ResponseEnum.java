@@ -7,9 +7,16 @@ package com.jason.base.enums;
 public enum ResponseEnum {
     SUCCESS("20000", "请求成功"),
     ERROR("40000", "请求失败"),
+
     VALID_PARAM_ERROR("40100", "参数校验失败"),
     VALID_ERROR("40100", "内容校验失败"),
-    CONNECTION_FAIL("40200", "参获取连接失败"),
+
+    FILE_ERROR("40200", "文件错误"),
+    FILE_NOT_EXIST("40201", "文件不存在"),
+    FILE_PATH_ERROR("40202", "文件路径错误"),
+    PATH_ERROR("40210", "路径错误"),
+
+    CONNECTION_FAIL("40900", "参获取连接失败"),
     SERVER_ERROR("50000", "服务器异常");
 
     private final String code;
