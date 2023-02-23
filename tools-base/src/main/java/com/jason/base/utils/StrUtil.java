@@ -1,9 +1,11 @@
 package com.jason.base.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -14,8 +16,6 @@ import java.util.regex.Pattern;
 public class StrUtil {
     private StrUtil() {
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(StrUtil.class);
 
     /**
      * 取出字符串中的空格、回车、制表符、换行符、换页符
@@ -29,5 +29,16 @@ public class StrUtil {
         }
         Pattern compile = Pattern.compile("[\t\r\n\f]");
         return compile.matcher(str).replaceAll("");
+    }
+
+    public static List<String> split(String str) {
+        if (StringUtils.isBlank(str)) {
+            return new ArrayList<>();
+        }
+        if (str.contains(",")) {
+            return new ArrayList<>(Arrays.asList(str.split(",")));
+        } else {
+            return new ArrayList<>(Collections.singletonList(str));
+        }
     }
 }

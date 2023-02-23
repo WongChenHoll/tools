@@ -3,8 +3,6 @@ package com.jason.base.utils;
 import cn.hutool.core.date.DateUtil;
 import com.jason.base.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -21,17 +19,15 @@ public class CurlUtil {
     private CurlUtil() {
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(CurlUtil.class);
-
     /**
      * 执行CURL命令
      *
      * @param curl CURL命令数组
      * @return 执行结果
      */
-    public static String executeCURL(String[] curl) {
-        logger.info("CURL开始执行时间：[{}]", DateUtil.now());
-        logger.info("CURL执行命令：[{}]", StringUtils.join(curl, " "));
+    public static String executeCURL(String[] curl) throws ServiceException {
+        System.out.println("CURL开始执行时间:" + DateUtil.now());
+        System.out.println("CURL执行命令：" + StringUtils.join(curl, " "));
         StringBuilder outPut = new StringBuilder();
         try {
             Process exec = Runtime.getRuntime().exec(curl);
@@ -46,14 +42,11 @@ public class CurlUtil {
                     count++;
                 }
             }
-            String rs = StringUtils.substring(outPut.toString(), 0, 10000);
-            logger.info("CURL执行结果：{}", rs);
-            return rs;
+            return StringUtils.substring(outPut.toString(), 0, 10000);
         } catch (IOException e) {
-            logger.error("CURL命令执行异常：", e);
-            return null;
+            throw ServiceException.serverException("CURL命令执行异常", e);
         } finally {
-            logger.info("CURL执行结束时间：[{}]", DateUtil.now());
+            System.out.println("CURL执行结束时间:" + DateUtil.now());
         }
     }
 

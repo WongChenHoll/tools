@@ -1,8 +1,6 @@
 package com.jason.base.utils;
 
 import com.jason.base.exception.ServiceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -57,11 +55,6 @@ public class MailUtil {
      */
     public static final String PATTERN = "text/plain;charset='UTF-8'";
     /**
-     * 日志
-     */
-    public static Logger log = LoggerFactory.getLogger(MailUtil.class);
-
-    /**
      * 发件人邮箱账号
      */
     private final String emailAccount;
@@ -106,7 +99,7 @@ public class MailUtil {
     /**
      * 构建邮箱的工具对象
      *
-     * @param emailAccount  邮箱账号
+     * @param emailAccount      邮箱账号
      * @param authorizationCode 邮箱授权码
      */
     public MailUtil(String emailAccount, String authorizationCode) {

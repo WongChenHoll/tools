@@ -38,6 +38,7 @@ public class DateUtil {
      *
      * @param startDate 开始日期
      * @param endDate   结束日期
+     *                  @param includeEndDate 是否包含结束那一天
      * @return 日期LocalDate集合
      */
     public static List<LocalDate> betweenLocalDate(String startDate, String endDate, boolean includeEndDate) {
@@ -51,8 +52,9 @@ public class DateUtil {
     }
 
     /**
-     * @param startDate 开始日期
-     * @param endDate   结束日期
+     * @param startDate      开始日期
+     * @param endDate        结束日期
+     * @param includeEndDate 是否包含结束那一天
      * @return 日期String集合
      */
     public static List<String> betweenString(String startDate, String endDate, boolean includeEndDate) {
