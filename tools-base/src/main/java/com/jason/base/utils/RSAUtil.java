@@ -9,16 +9,37 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 /**
+ * <pre>
+ *     在使用 1024 位的密钥时,最大可以加密 1024/8 = 128字节的数据.
+ *     密钥对改为 2048 位时, 最大加密明文大小 = 2048(bit) / 8 - 11(byte) = 245 byte
+ *
+ *     PKCS1 和 PKCS8 的区别
+ *          PKCS#1格式
+ *              以-----BEGIN RSA PRIVATE KEY-----开头
+ *              以-----END RSA PRIVATE KEY-----结束
+ *          PKCS#8格式
+ *              以-----BEGIN PRIVATE KEY-----开头
+ *              以-----END PRIVATE KEY-----结束
+ *      通常JAVA中需要PKCS8 格式的密钥
+ *
+ *      <a href="https://uutool.cn/rsa-generate/">密钥生成网站</a>
+ * </pre>
+ *
  * @author WongChenHoll
  * @description RSA加密、解密、签名、验签
  * @date 2023-2-21 星期二 13:26
  **/
-public class KeyPairByRSA {
+public class RSAUtil {
+
+    public static final String FILE_HEADER_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----";
+    public static final String FILE_END_PUBLIC_KEY = "-----END PUBLIC KEY-----";
+    public static final String FILE_HEADER_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----";
+    public static final String FILE_END_PRIVATE_KEY = "-----END PRIVATE KEY-----";
 
     // 加密类型
-    private static final String ENCRYPT_TYPE = "RSA";
+    public static final String ENCRYPT_TYPE = "RSA";
     // 签名类型
-    private static final String SING_TYPE = "SHA256WITHRSA";
+    public static final String SING_TYPE = "SHA256WITHRSA";
     // 编码格式
     private static final Charset UTF_8 = StandardCharsets.UTF_8;
     // 业务数据
