@@ -1039,11 +1039,6 @@ protected T initialValue() {
 
 ​	跟HashMap类似，INITIAL_CAPACITY代表这个Map的初始容量；table 是一个Entry 类型的数组，用于存储数据；size 代表表中的存储数目； threshold 代表需要扩容时对应 size 的阈值。
 
-链接：https://www.jianshu.com/p/acfd2239c9f4
-
-来源：简书
-
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 **（2） 存储结构 - Entry**
 
