@@ -10,23 +10,26 @@ public class ArrayUtil {
     }
 
     public static int[] copy(int[] array) {
-        return copy(array);
+        if (array == null) {
+            return new int[]{};
+        }
+        int[] copy = new int[array.length];
+        if (array.length == 0) {
+            return copy;
+        }
+        System.arraycopy(array, 0, copy, 0, array.length);
+        return copy;
     }
 
     public static String[] copy(String[] array) {
-        return copy(array);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T[] copy(T[] array) {
         if (array == null) {
-            return (T[]) new Object[]{};
+            return new String[]{};
         }
-        Object[] copy = new Object[array.length];
+        String[] copy = new String[array.length];
         if (array.length == 0) {
-            return (T[]) copy;
+            return copy;
         }
         System.arraycopy(array, 0, copy, 0, array.length);
-        return (T[]) copy;
+        return copy;
     }
 }
