@@ -1,18 +1,18 @@
 package com.jason.base.utils;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.lang.UUID;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -20,6 +20,7 @@ import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -167,7 +168,7 @@ public class JWTUtil {
     }
 
     public static PrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        return getPrivateKey("RAS_PRIVATE_KEY.pem");
+        return getPrivateKey("/RAS_PRIVATE_KEY.pem");
     }
 
     public static PrivateKey getPrivateKey(String privateKeyPath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -186,7 +187,7 @@ public class JWTUtil {
     }
 
     public static PublicKey getPublicKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        return getPublicKey("RAS_PUBLIC_KEY.pem");
+        return getPublicKey("/RAS_PUBLIC_KEY.pem");
     }
 
     public static PublicKey getPublicKey(String publicKeyPath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -198,8 +199,10 @@ public class JWTUtil {
     }
 
     private static String getFileContext(String fileClassPath) throws IOException {
-        ClassPathResource resource = new ClassPathResource(fileClassPath);
-        return IoUtil.read(Files.newInputStream(resource.getFile().toPath()), StandardCharsets.UTF_8);
+        InputStream stream = JWTUtil.class.getResourceAsStream(fileClassPath);
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> lines = IoUtil.readLines(stream, StandardCharsets.UTF_8, list);
+        return CollectionUtil.join(lines, "");
     }
 
 }
