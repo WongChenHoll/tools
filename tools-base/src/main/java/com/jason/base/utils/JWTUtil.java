@@ -5,7 +5,8 @@ import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
-import com.jason.base.exception.ServiceException;
+import cn.hutool.core.lang.UUID;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -57,20 +58,32 @@ import java.util.Map;
 public class JWTUtil {
 
     private static final String SECRET_KEY = "47E7BF5238DF"; // 任何字符串
-    public static final float EXPIRATION_TIME = 60 * 2;
+    public static final int EXPIRATION_TIME = 30; // 过期时间：30（分钟）
+    public static final int ALG_HMAC = 1; // 算法类型：HMAC
+    public static final int ALG_RSA = 2;  // 算法类型：RSA
 
-    public static void main(String[] args) throws ServiceException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         HashMap<String, Object> map = new HashMap<>();
         map.put("username", "张三");
         map.put("ip", "127.0.0.11");
 
-        String jwtHmac1 = createJWTHmac(map);
+        String jwtHmac1 = createTokenHmac(map);
         System.out.println(jwtHmac1);
-        System.out.println(parseClaimsToken(jwtHmac1));
+        System.out.println(parseToken(jwtHmac1, ALG_HMAC));
 
-        String jwtHmac = createJWTHmac("1234");
+        String jwtHmac = createTokenHmac("1234");
         System.out.println(jwtHmac);
-        System.out.println(parseToken(jwtHmac));
+        System.out.println(parseToken(jwtHmac, ALG_HMAC).getSubject());
+
+        String tokenRsa = createTokenRsa("112233445566");
+        System.out.println(tokenRsa);
+        System.out.println(parseToken(tokenRsa, ALG_RSA).getSubject());
+    }
+
+
+    public static String createTokenHmac(Map<String, Object> map) {
+        return createTokenHmac(map, UUID.fastUUID().toString(true), EXPIRATION_TIME);
     }
 
     /**
@@ -78,16 +91,23 @@ public class JWTUtil {
      * 被加密内容为Map类型。
      * 使用SHA-256的HMAC的JWA算法。<br/>
      *
-     * @param map 需要加密的内容
+     * @param map            需要加密的内容
+     * @param id             ID
+     * @param expirationTime 过期时间，单位：分钟
      * @return 加密后的密文
      */
-    public static String createJWTHmac(Map<String, Object> map) {
+    public static String createTokenHmac(Map<String, Object> map, String id, int expirationTime) {
         return Jwts.builder()
+                .setId(id)
                 .setIssuedAt(new Date()) // 设置荷载时间
-                .setExpiration(DateUtil.offset(new Date(), DateField.HOUR_OF_DAY, 1).toJdkDate()) // 设置过期时间，1小时
+                .setExpiration(DateUtil.offset(new Date(), DateField.MINUTE, expirationTime).toJdkDate()) // 设置过期时间，1小时
                 .addClaims(map)
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
+    }
+
+    public static String createTokenHmac(String subject) {
+        return createTokenHmac(subject, UUID.randomUUID().toString(true), EXPIRATION_TIME);
     }
 
     /**
@@ -95,30 +115,55 @@ public class JWTUtil {
      * 被加密内容为字符串。
      * 使用SHA-256的HMAC的JWA算法。<br/>
      *
-     * @param subject 需要加密的内容
+     * @param subject        需要加密的内容
+     * @param id             ID
+     * @param expirationTime 过期时间，单位：分钟
      * @return 加密后的密文
      */
-    public static String createJWTHmac(String subject) {
+    public static String createTokenHmac(String subject, String id, int expirationTime) {
         return Jwts.builder()
+                .setId(id)
                 .setIssuedAt(new Date()) // 设置荷载时间
                 .setSubject(subject)
-                .setExpiration(DateUtil.offset(new Date(), DateField.HOUR_OF_DAY, 1).toJdkDate()) // 设置过期时间，1小时
+                .setExpiration(DateUtil.offset(new Date(), DateField.MINUTE, expirationTime).toJdkDate()) // 设置过期时间，1小时
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    public static String parseToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token).getBody().getSubject();
 
+    public static String createTokenRsa(String subject) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        return createTokenRsa(subject, UUID.randomUUID().toString(true), EXPIRATION_TIME);
     }
 
-    public static String parseClaimsToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token).getBody().toString();
+    /**
+     * 基于RSA算法加密生成token
+     *
+     * @param subject        加密内容
+     * @param id             ID
+     * @param expirationTime 过期时间，单位：分钟
+     * @return 密文
+     * @throws IOException,NoSuchAlgorithmException,InvalidKeySpecException 获取密钥异常
+     */
+    public static String createTokenRsa(String subject, String id, int expirationTime) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        return Jwts.builder()
+                .setId(id)
+                .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(DateUtil.offset(new Date(), DateField.MINUTE, expirationTime))
+                .signWith(SignatureAlgorithm.RS256, getPrivateKey())
+                .compact();
+    }
 
+    public static Claims parseToken(String token, int algType) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        if (algType == 2) {
+            return Jwts.parser()
+                    .setSigningKey(getPublicKey())
+                    .parseClaimsJws(token).getBody();
+        } else {
+            return Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token).getBody();
+        }
     }
 
     public static PrivateKey getPrivateKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
