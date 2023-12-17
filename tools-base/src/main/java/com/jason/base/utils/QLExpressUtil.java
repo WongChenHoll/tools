@@ -114,7 +114,7 @@ public class QLExpressUtil {
         c1.put("语文", 100);
         c1.put("数学", 100);
         c1.put("英语", 100);
-        System.out.println(r1.execute(express, c1, null, false, false, null));
+        System.out.println(r1.execute(express, c1, null, false, false));
 
         // 表达式中出现多个绑定的函数
         String exp = "打印('你好吗？'); 打印(转换为大写(\"hello world!\")); splitString('aa,bb,cc')";
