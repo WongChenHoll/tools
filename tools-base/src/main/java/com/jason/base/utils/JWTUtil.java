@@ -63,26 +63,6 @@ public class JWTUtil {
     public static final int ALG_HMAC = 1; // 算法类型：HMAC
     public static final int ALG_RSA = 2;  // 算法类型：RSA
 
-
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("username", "张三");
-        map.put("ip", "127.0.0.11");
-
-        String jwtHmac1 = createTokenHmac(map);
-        System.out.println(jwtHmac1);
-        System.out.println(parseToken(jwtHmac1, ALG_HMAC));
-
-        String jwtHmac = createTokenHmac("1234");
-        System.out.println(jwtHmac);
-        System.out.println(parseToken(jwtHmac, ALG_HMAC).getSubject());
-
-        String tokenRsa = createTokenRsa("112233445566");
-        System.out.println(tokenRsa);
-        System.out.println(parseToken(tokenRsa, ALG_RSA).getSubject());
-    }
-
-
     public static String createTokenHmac(Map<String, Object> map) {
         return createTokenHmac(map, UUID.fastUUID().toString(true), EXPIRATION_TIME);
     }
@@ -198,7 +178,7 @@ public class JWTUtil {
         return keyFactory.generatePublic(new X509EncodedKeySpec(decode));
     }
 
-    private static String getFileContext(String fileClassPath) throws IOException {
+    private static String getFileContext(String fileClassPath) {
         InputStream stream = JWTUtil.class.getResourceAsStream(fileClassPath);
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> lines = IoUtil.readLines(stream, StandardCharsets.UTF_8, list);
