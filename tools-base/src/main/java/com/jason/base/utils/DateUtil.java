@@ -19,10 +19,15 @@ public class DateUtil {
     public static final String DEFAULT_FULL_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
-     * 获取当前时间的字符串类型值
+     * 获取当前时间的字符串类型值:yyyy-MM-dd HH:mm:ss
      */
     public static String currDateStr() {
         return new SimpleDateFormat(DEFAULT_FULL_FORMAT).format(new Date());
+    }
+
+    public static String currDateStr(String format) {
+        DateTimeFormatter pattern = DateTimeFormatter.ofPattern(format);
+        return LocalDate.now().format(pattern);
     }
 
     public static String toDateStr(Date date) {
@@ -33,12 +38,13 @@ public class DateUtil {
         return LocalDate.parse(date, DateTimeFormatter.ofPattern(DEFAULT_FORMAT_YYYY_MM_DD));
     }
 
+
     /**
      * 取两个日期之间的所有日期
      *
-     * @param startDate 开始日期
-     * @param endDate   结束日期
-     *                  @param includeEndDate 是否包含结束那一天
+     * @param startDate      开始日期
+     * @param endDate        结束日期
+     * @param includeEndDate 是否包含结束那一天
      * @return 日期LocalDate集合
      */
     public static List<LocalDate> betweenLocalDate(String startDate, String endDate, boolean includeEndDate) {
