@@ -15,6 +15,11 @@ public class ServiceException extends Exception {
         this.code = null;
     }
 
+    private ServiceException(Throwable throwable) {
+        super(throwable);
+        this.code = null;
+    }
+
     private ServiceException(String message) {
         super(message);
         this.code = null;
@@ -78,6 +83,10 @@ public class ServiceException extends Exception {
 
     public static ServiceException fileNotExistException(String message) {
         return baseException(message, ResponseEnum.FILE_NOT_EXIST);
+    }
+
+    public static ServiceException threadException(Throwable throwable) {
+        return new ServiceException(throwable);
     }
 
     public static ServiceException fileNotExistException() {
