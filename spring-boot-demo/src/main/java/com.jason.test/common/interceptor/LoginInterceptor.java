@@ -33,7 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         ValueOperations operations = redisTemplate.opsForValue();
         HttpSession session = request.getSession();
         String key = BaseConstans.REDIS_KEY_LOGIN_INFO + session.getId();

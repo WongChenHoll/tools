@@ -1,5 +1,7 @@
 package test.systems;
 
+import java.util.Map;
+
 /**
  * @author WongChenHoll
  * @description
@@ -12,5 +14,13 @@ public class TestSystem {
         System.out.println("Runtime.getRuntime().maxMemory() 虚拟机最大内存量:" + Runtime.getRuntime().maxMemory() + " bytes");
         System.out.println("Runtime.getRuntime().totalMemory() 虚拟机中的内存总量:" + Runtime.getRuntime().totalMemory() + " bytes");
         System.out.println("Runtime.getRuntime().totalMemory() 虚拟机中的内存总量:" + Runtime.getRuntime().totalMemory()/1024/1024 + " M");
+
+        Map<String, String> map = System.getenv();
+        String userName = map.get("USERNAME");// 获取用户名
+        String computerName = map.get("COMPUTERNAME");// 获取计算机名
+        String userDomain = map.get("USERDOMAIN");// 获取计算机域名
+        System.out.println("userName:"+userName);
+        System.out.println("computerName:"+computerName);
+        System.out.println("userDomain:"+userDomain);
     }
 }
