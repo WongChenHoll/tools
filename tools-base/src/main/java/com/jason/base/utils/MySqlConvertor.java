@@ -144,7 +144,6 @@ public class MySqlConvertor extends SQLConvertor {
             SQLConvertor.writeFile(new File(filePath + "\\" + StrUtil.toClassName(tableName) + ".java"), modelClass.toString().getBytes());
             latch.countDown();
         }
-
     }
 
     private static String getFieldType(String columnType) {
